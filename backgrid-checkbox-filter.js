@@ -75,6 +75,7 @@
     },
 
     render: function() {
+      var scope = this;
       this.templateData['id'] = this.filterId;
       this.templateData['items'] = this.checkboxData;
       this.templateData['checkbox_name'] = this.checkboxName;
@@ -82,21 +83,22 @@
 
       this.$el.empty().append(this.template(this.templateData));
       // use defer so the elements are completely rendered before we do jquery stuff on them
-      _.defer(() => {
-        this.addListeners();
+      _.defer(function() {
+        scope.addListeners();
       });
       return this;
     },
 
     addListeners: function() {
+      var scope = this;
       var elementId = '#' + this.filterId + ' .' + this.checkboxClass;
-      $(elementId + '-clear').click(() => {
+      $(elementId + '-clear').click(function() {
         $(elementId + ' input[type=checkbox]:checked').prop('checked', false);
-        this.onChange();
+        scope.onChange();
       });
-      $(elementId + '-selectall').click(() => {
+      $(elementId + '-selectall').click(function() {
         $(elementId + ' input[type=checkbox]').prop('checked', true);
-        this.onChange();
+        scope.onChange();
       });
       this.onChange();
     },
